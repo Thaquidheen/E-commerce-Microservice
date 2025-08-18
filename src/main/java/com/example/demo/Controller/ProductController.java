@@ -32,10 +32,22 @@ ResponseEntity<Product> response= new ResponseEntity<>(
     }
 //    Get all products
     @GetMapping()
-    public List<Product> getAllProducts(){
-        return productService.getAllProducts();
+    public ResponseEntity<List<Product>> getAllProducts(){
+
+        ResponseEntity<List<Product>> response= new ResponseEntity<>(
+                productService.getAllProducts(),
+                HttpStatus.OK
+        );
+        return response;
+
     }
 
+
+//    delete product
+@DeleteMapping("/delete/{id}")
+    public void deleteProduct(@PathVariable("id")Long product_Id) throws ProductNotExceptions {
+         productService.deleteSingleproduct(product_Id);
+    }
     // FIXED: Replace entire product (PUT)
     @PutMapping("/{id}")
     public Product replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){
@@ -44,7 +56,7 @@ ResponseEntity<Product> response= new ResponseEntity<>(
 
     // FIXED: Update partial product (PATCH)
     @PatchMapping("/{id}")
-    public Product updateProduct(@PathVariable("id") Long id, @RequestBody Product product){
+    public Product updateProduct(@PathVariable("id") Long id, @RequestBody Product product)throws ProductNotExceptions{
         return productService.updateProduct(id, product);   // ✅ Pass both parameters
     }
 }

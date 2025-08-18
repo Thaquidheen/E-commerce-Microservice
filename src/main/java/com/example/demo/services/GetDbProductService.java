@@ -27,11 +27,21 @@ public class GetDbProductService implements ProductService{
 
         return  optionalProduct.get();
     }
+    @Override
+    public void deleteSingleproduct(Long product_Id) throws ProductNotExceptions{
+        Optional<Product> productoptional = productRepository.findById(product_Id);
+
+        if(productoptional.isEmpty()){
+            throw new ProductNotExceptions("product with id not present");
+        }
+    productRepository.deleteById(product_Id);
+    }
 
     @Override
     public List<Product> getAllProducts(){
-        return null;
+          return productRepository.findAll();
     }
+
 
     @Override
     public Product replaceProduct(Long id, Product product) {
@@ -39,7 +49,21 @@ public class GetDbProductService implements ProductService{
     }
 
     @Override
-    public Product updateProduct(Long id, Product product) {
-        return null;
+    public Product updateProduct(Long id, Product product) throws ProductNotExceptions{
+        Optional<Product> productoptional = productRepository.findById(id);
+
+        if(productoptional.isEmpty()){
+            throw new ProductNotExceptions("product with id not present");
+        }
+        Product getDbProduct = productoptional.get();
+
+        if(product.getTitle() != null){
+            getDbProduct.setTitle(product.getTitle());
+        }
+
+        if(product.getPrice() != null){
+            getDbProduct.setPrice(product.getPrice());
+        }
+        return productRepository.save(getDbProduct);
     }
 }
