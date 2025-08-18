@@ -4,6 +4,7 @@ package com.example.demo.Controller;
 import com.example.demo.Exceptions.ProductNotExceptions;
 import com.example.demo.model.Product;
 import com.example.demo.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class ProductController {
 
     ProductService productService;
 
-    public ProductController(ProductService productService){
+    public ProductController(@Qualifier("DbProductService") ProductService productService){
         this.productService = productService;
     }
 
