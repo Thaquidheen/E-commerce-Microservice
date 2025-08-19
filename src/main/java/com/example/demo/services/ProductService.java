@@ -7,6 +7,7 @@ import java.util.List;
 
 public interface ProductService {
     Product getSingleProduct(Long productId) throws ProductNotExceptions;
+    Product addProduct(Product product);
     List<Product> getAllProducts() ;
     void deleteSingleproduct(Long product_Id)throws ProductNotExceptions;
     Product replaceProduct(Long id, Product product);

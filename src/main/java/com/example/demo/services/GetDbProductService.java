@@ -1,7 +1,9 @@
 package com.example.demo.services;
 
 import com.example.demo.Exceptions.ProductNotExceptions;
+import com.example.demo.model.Category;
 import com.example.demo.model.Product;
+import com.example.demo.repository.CategoryRepository;
 import com.example.demo.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
@@ -13,8 +15,15 @@ public class GetDbProductService implements ProductService{
 
      ProductRepository productRepository;
 
-    public GetDbProductService(ProductRepository productRepository  ) {
+     CategoryRepository categoryRepository;
+
+//    public GetDbProductService(CategoryRepository categoryRepository  ) {
+//        this.categoryRepository = categoryRepository;
+//    }
+
+    public GetDbProductService(ProductRepository productRepository ,CategoryRepository categoryRepository ) {
         this.productRepository = productRepository;
+        this.categoryRepository = categoryRepository;
     }
 
     @Override
@@ -27,6 +36,19 @@ public class GetDbProductService implements ProductService{
 
         return  optionalProduct.get();
     }
+
+    @Override
+    public Product addProduct(Product product) {
+
+//        Category category =  product.getCategory();
+//
+//        if(category.getId() == null){
+//            category = categoryRepository.save(category);
+//            product.setCategory(category);
+//        }
+        return productRepository.save(product);
+    }
+
     @Override
     public void deleteSingleproduct(Long product_Id) throws ProductNotExceptions{
         Optional<Product> productoptional = productRepository.findById(product_Id);

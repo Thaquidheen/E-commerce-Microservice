@@ -48,6 +48,15 @@ ResponseEntity<Product> response= new ResponseEntity<>(
     public void deleteProduct(@PathVariable("id")Long product_Id) throws ProductNotExceptions {
          productService.deleteSingleproduct(product_Id);
     }
+
+//    add a product
+    @PostMapping()
+    public Product addproduct(@RequestBody Product product){
+        return productService.addProduct(product);
+    }
+
+
+
     // FIXED: Replace entire product (PUT)
     @PutMapping("/{id}")
     public Product replaceProduct(@PathVariable("id") Long id, @RequestBody Product product){
